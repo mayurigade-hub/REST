@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const path = require('path');
+const { v4 : uuidv4 } = require('uuid');
+// uuidv4(); // ⇨ 'b18794e8-5d0d-417c-b361-ba38e78411b4'
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -12,17 +14,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const posts = [
     {
-    id : '1a',
+    id : uuidv4(),
     username : "John Doe",
     content: "Learn Without Limits!"
     },
     {
-    id : '2b',
+    id : uuidv4(),
     username : "all.about.mayuri",
     content: "FuckEveryone!"
     },
     {
-    id : '3c',
+    id : uuidv4(),
     username : "Alice",
     content: "FuckCollegeMan"
     }
@@ -38,7 +40,8 @@ app.get('/posts/new', (req, res) => {
 
 app.post('/posts', (req, res) => {
   let { username, content } = req.body;
-  posts.push({ username, content });
+  let id = uuidv4();
+  posts.push({ id, username, content });
   res.redirect('/posts');
 });
 
