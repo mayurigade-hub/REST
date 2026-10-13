@@ -12,14 +12,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const posts = [
     {
+    id : '1a',
     username : "John Doe",
     content: "Learn Without Limits!"
     },
     {
+    id : '2b',
     username : "all.about.mayuri",
     content: "FuckEveryone!"
     },
     {
+    id : '3c',
     username : "Alice",
     content: "FuckCollegeMan"
     }
@@ -38,6 +41,13 @@ app.post('/posts', (req, res) => {
   posts.push({ username, content });
   res.redirect('/posts');
 });
+
+app.get('/posts/:id', (req,res) => {
+    let { id } = req.params;
+    let post = posts.find((p) => id === p.id);
+    console.log(post);
+    res.render("show.ejs", { post });   
+})
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
